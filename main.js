@@ -7,8 +7,8 @@ class Snake {
         this.length = length ;
         this.direction = direction;
     }
-
-    static draw (){
+    
+    static drawSnake (){
 
     }
 
@@ -27,5 +27,10 @@ function food(){
 function navigate (){
 
 
-
 }
+
+function drawBackground(){
+    ctx.fillStyle = 'tan';
+    ctx.fillRect(0,0,myCanvas.width,myCanvas.height)
+}
+
