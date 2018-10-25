@@ -4,10 +4,22 @@ const canvas_height = parseInt(myCanvas.height,10);
 const ctx = myCanvas.getContext("2d");
 const direction = ['left','right','up','down'];
 
+let food = [];
+
 class Snake {
 
-    constructor(snake_body){
-        this.snake_body = snake_body;
+    constructor(snake_skeleton){
+        this.snake_skeleton = snake_skeleton;
+    }
+
+    static randomPosition(){
+        let x_position = Math.floor(Math.random()*(canvas_width-11)+10);
+        x_position -= x_position % 5;
+        let y_position = Math.floor(Math.random()*(canvas_height-11)+10);
+        y_position -= y_position % 5;
+
+        return [x_position,y_position];
+
     }
     
     static drawSnakeUnit (ctx,x,y,head){
@@ -46,10 +58,7 @@ class Snake {
 
     static startSnake(length){
         
-        let x_position = Math.floor(Math.random()*(canvas_width/2-101)+100);
-        x_position -= x_position % 5;
-        let y_position = Math.floor(Math.random()*(canvas_height/2-81)+80);
-        y_position -= y_position % 5;
+        let [x_position,y_position] = this.randomPosition();
         let init_direction = direction[Math.floor(Math.random()*4)];
         let snake_skeleton = [[x_position,y_position,init_direction,true]]; 
 
@@ -74,19 +83,48 @@ class Snake {
 
     }
 
-}
+    static createFood(ctx,snake_skeleton){
+        let [x,y] = this.randomPosition();
+        // need to check for snake body
 
+        for (let i of snake_skeleton){
+             if (x == i[0] && y == i[1]){
+                this.createFood(ctx,snake_skeleton);
+            } 
+        }
+
+        return [x,y];
+        
+
+
+    }
+
+}
 
 function drawBackground(){
     ctx.fillStyle = 'tan';
-    ctx.fillRect(0,0,myCanvas.width,myCanvas.height)
+    ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+}
+
+function drawFood(){
+
+    let [x,y] = food;
+    ctx.fillStyle = 'green';
+    ctx.fillRect(x,y,5,5);
+
+
+}
+
+function drawGame(){
+    drawBackground();
+    drawFood();
+    Snake.drawSnake(snake);
 }
 
 snake = Snake.startSnake(4);
 document.addEventListener('click',function(){
     snake = Snake.moveSnake(snake);
-    drawBackground();
-    Snake.drawSnake(snake);
+    drawGame();
 
 });
 
@@ -103,4 +141,12 @@ document.addEventListener('keydown',(event) =>{
         snake[0][2] = keyName == 'ArrowRight' ? 'right': snake[0][2];
     }
 
+})
+
+document.addEventListener('keydown',(event) =>{
+    const keyName = event.key;
+    if(keyName == 'f'){
+       food = Snake.createFood(ctx,snake);
+       console.log(food);
+    }
 })
