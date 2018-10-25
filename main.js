@@ -92,7 +92,7 @@ class Snake {
                 this.createFood(ctx,snake_skeleton);
             } 
         }
-
+        console.log('food created');
         return [x,y];
         
 
@@ -112,6 +112,14 @@ function drawFood(){
     ctx.fillStyle = 'green';
     ctx.fillRect(x,y,5,5);
 
+}
+
+function collision (food,snake_skeleton){
+
+if (food[0] === snake_skeleton[0][0] && food[1] === snake_skeleton[0][1]){
+    return true;
+}
+
 
 }
 
@@ -121,16 +129,18 @@ function playGame(){
     drawFood();
     Snake.drawSnake(snake);
     snake = Snake.moveSnake(snake); 
+    if (collision(food,snake)){
+        console.log('food eaten');
+        let last_piece = snake[snake.length -1 ];
+        snake.push(last_piece); 
+        food =[];
+        food = Snake.createFood(ctx,snake);
+    }
 
 }
-
 snake = Snake.startSnake(4);
-document.addEventListener('click',function(){
-    console.log('click');
+setInterval(playGame,50);
 
-    setInterval(playGame,50);
-
-});
 
 document.addEventListener('keydown',(event) =>{
     const keyName = event.key;
