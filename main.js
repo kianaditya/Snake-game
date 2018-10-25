@@ -115,16 +115,20 @@ function drawFood(){
 
 }
 
-function drawGame(){
+function playGame(){
+    
     drawBackground();
     drawFood();
     Snake.drawSnake(snake);
+    snake = Snake.moveSnake(snake); 
+
 }
 
 snake = Snake.startSnake(4);
 document.addEventListener('click',function(){
-    snake = Snake.moveSnake(snake);
-    drawGame();
+    console.log('click');
+
+    setInterval(playGame,50);
 
 });
 
