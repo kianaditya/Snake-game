@@ -186,8 +186,8 @@ document.addEventListener('DOMContentLoaded',() =>{
 
     document.addEventListener('keydown',(event) => {
     
-        const keyName = event.key;
-        if (keyName === 'r'){
+        const keyName = event.keyCode;
+        if (keyName === 32){
             snake = Snake.startSnake(18);
             clearInterval(game_start);
             startGame ();
