@@ -17,28 +17,31 @@ class Snake {
 
     }
 
-    static moveSnake(snake_skeleton){
+    static moveSnake(snake_skeleton,direction = snake_skeleton[0][2]){
 
-        for(let i = 0;i<snake_skeleton.length;i++){
-            //if head, keep direction, else copy direction from previous body part, apply calculcation as per direction
-         let [x,y,direction, head] = snake_skeleton[i];
-           x -= direction == 'left' ? 5 : 0;
-           x += direction =='right' ? 5 : 0;
-           y -= direction == "up" ? 5 : 0 ;
-           y += direction == "down" ? 5 : 0 ;
+        // pop last element,add new head as per new calculations
 
-           direction =  head ? snake_skeleton[i][2]: snake_skeleton[i-1][2]; 
+        snake_skeleton.pop();
+        snake_skeleton[0][3] = false;
 
-           //manage boundaries;
+        let x = snake_skeleton[0][0];
+        let y = snake_skeleton[0][1];
 
-           x = x <= 0 ? x+canvas_width : x;
-           x = x >= canvas_width ? 0 : x;
-           y = y <= 0 ? y+canvas_height : y ;
-           y = y >= canvas_height ? 0 : y ;
+        x -= direction == 'left' ? 5 : 0;
+        x += direction =='right' ? 5 : 0;
+        y -= direction == "up" ? 5 : 0 ;
+        y += direction == "down" ? 5 : 0 ;
 
-           snake_skeleton[i] = [x,y,direction,head] ;
+        x = x <= 0 ? x+canvas_width : x;
+        x = x >= canvas_width ? 0 : x;
+        y = y <= 0 ? y+canvas_height : y ;
+        y = y >= canvas_height ? 0 : y ;
 
-        }
+        let new_head = [x,y,direction, true]
+        snake_skeleton.unshift(new_head);
+
+        console.log(snake_skeleton);
+
         return snake_skeleton;
 
     }
@@ -83,13 +86,28 @@ function drawBackground(){
 
 snake = Snake.startSnake(4);
 document.addEventListener('click',function(){
-
-
+    console.log(snake[0]);
     snake = Snake.moveSnake(snake);
     drawBackground();
     Snake.drawSnake(snake);
-    console.log(snake[0]);
 
 });
 
-// Snake.moveSnake(snake);
+document.addEventListener('keydown',(event) =>{
+    const keyName = event.key;
+
+    console.log(keyName,snake[0][2]);
+
+    if ((snake[0][2] == 'left' || snake[0][2] == 'right') && (keyName == 'ArrowUp' || keyName == 'ArrowDown')){
+        snake[0][2] = keyName == 'ArrowUp' ? 'up': snake[0][2];
+        snake[0][2] = keyName == 'ArrowDown' ? 'down': snake[0][2];
+    }
+
+    if ((snake[0][2] == 'up' || snake[0][2] == 'down') && (keyName == 'ArrowRight' || keyName == 'ArrowLeft')){
+        snake[0][2] = keyName == 'ArrowLeft' ? 'left': snake[0][2];
+        snake[0][2] = keyName == 'ArrowRight' ? 'right': snake[0][2];
+    }
+
+    console.log(snake);
+
+})
