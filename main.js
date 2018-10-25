@@ -1,10 +1,31 @@
-const myCanvas = document.querySelector('.canvas');
-const ctx = myCanvas.getContext('2d');
+const myCanvas = document.querySelector('#canvas');
+const ctx = myCanvas.getContext("2d");
 
-function drawSnake(ctx,x,y,head = false){
+class Snake {
 
-    ctx.fillStyle = head ? "brown" :"black";
-    ctx.fillRect(x,y,10,10);;
+    constructor(length,direction){
+        this.length = length ;
+        this.direction = direction;
+    }
+
+    static draw (){
+
+    }
+
+    static navigate(){
+
+    }
+
 
 }
 
+function food(){
+
+
+}
+
+function navigate (){
+
+
+
+}
