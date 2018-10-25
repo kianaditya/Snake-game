@@ -12,7 +12,7 @@ class Snake {
     
     static drawSnakeUnit (ctx,x,y,head){
         
-        ctx.fillStyle = head === 'Yes' ? "red" : "gray";
+        ctx.fillStyle = head === true ? "red" : "gray";
         ctx.fillRect(x,y,5,5);
 
     }
@@ -46,7 +46,9 @@ class Snake {
     static startSnake(length){
         
         let x_position = Math.floor(Math.random()*(canvas_width/2-101)+100);
+        x_position -= x_position % 5;
         let y_position = Math.floor(Math.random()*(canvas_height/2-81)+80);
+        y_position -= y_position % 5;
         let init_direction = direction[Math.floor(Math.random()*4)];
         let snake_skeleton = [[x_position,y_position,init_direction,true]]; 
 
