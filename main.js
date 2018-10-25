@@ -40,8 +40,6 @@ class Snake {
         let new_head = [x,y,direction, true]
         snake_skeleton.unshift(new_head);
 
-        console.log(snake_skeleton);
-
         return snake_skeleton;
 
     }
@@ -86,7 +84,6 @@ function drawBackground(){
 
 snake = Snake.startSnake(4);
 document.addEventListener('click',function(){
-    console.log(snake[0]);
     snake = Snake.moveSnake(snake);
     drawBackground();
     Snake.drawSnake(snake);
@@ -95,8 +92,6 @@ document.addEventListener('click',function(){
 
 document.addEventListener('keydown',(event) =>{
     const keyName = event.key;
-
-    console.log(keyName,snake[0][2]);
 
     if ((snake[0][2] == 'left' || snake[0][2] == 'right') && (keyName == 'ArrowUp' || keyName == 'ArrowDown')){
         snake[0][2] = keyName == 'ArrowUp' ? 'up': snake[0][2];
@@ -107,7 +102,5 @@ document.addEventListener('keydown',(event) =>{
         snake[0][2] = keyName == 'ArrowLeft' ? 'left': snake[0][2];
         snake[0][2] = keyName == 'ArrowRight' ? 'right': snake[0][2];
     }
-
-    console.log(snake);
 
 })
