@@ -5,6 +5,7 @@ const ctx = myCanvas.getContext("2d");
 const direction = ['left','right','up','down'];
 
 let food = [];
+let score = 0;
 
 class Snake {
 
@@ -84,6 +85,7 @@ class Snake {
     }
 
     static createFood(ctx,snake_skeleton){
+
         let [x,y] = this.randomPosition();
         // need to check for snake body
 
@@ -94,8 +96,6 @@ class Snake {
         }
         console.log('food created');
         return [x,y];
-        
-
 
     }
 
@@ -116,10 +116,23 @@ function drawFood(){
 
 function collision (food,snake_skeleton){
 
-if (food[0] === snake_skeleton[0][0] && food[1] === snake_skeleton[0][1]){
-    return true;
+    if (food[0] === snake_skeleton[0][0] && food[1] === snake_skeleton[0][1]){
+        return true;
+    }
+
+
 }
 
+function selfKill(snake_skeleton){
+
+    let head_x = snake_skeleton[0][0];
+    let head_y = snake_skeleton[0][1];
+    for (let i =1;i < snake_skeleton.length; i++) {
+
+        if (head_x === snake_skeleton[i][0] && head_y === snake_skeleton[i][1]){
+            return true;
+        }  
+    }
 
 }
 
@@ -134,12 +147,18 @@ function playGame(){
         let last_piece = snake[snake.length -1 ];
         snake.push(last_piece); 
         food =[];
+        score += 1;
+        console.log(score);
         food = Snake.createFood(ctx,snake);
     }
 
+    if(selfKill(snake)){
+        clearInterval(game_start);
+    }
+
 }
-snake = Snake.startSnake(4);
-setInterval(playGame,50);
+snake = Snake.startSnake(18);
+let game_start = setInterval(playGame,50);
 
 
 document.addEventListener('keydown',(event) =>{
