@@ -151,12 +151,13 @@ function playGame(){
         score += 1;
         console.log(score);
         food = Snake.createFood(ctx,snake);
-        document.querySelector('#score').innerHTML = score;
+        document.querySelector('#score').innerHTML = 'Score: ' + score;
     }
 
     if(selfKill(snake)){
         score =0 ;
         clearInterval(game_start);
+        document.querySelector('#game-over').innerHTML = 'Game Over';
     }
 
 }
@@ -165,7 +166,7 @@ snake = Snake.startSnake(18);
 
 function startGame(){
     score = 0;
-    document.querySelector('#score').innerHTML = score;
+    document.querySelector('#score').innerHTML = 'Score: ' + score;
     game_start = setInterval(playGame,50);
     food = Snake.createFood(ctx,snake);
 }
