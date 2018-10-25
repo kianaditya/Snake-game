@@ -151,35 +151,26 @@ function playGame(){
         score += 1;
         console.log(score);
         food = Snake.createFood(ctx,snake);
+        document.querySelector('#score').innerHTML = score;
     }
 
     if(selfKill(snake)){
+        score =0 ;
         clearInterval(game_start);
     }
 
 }
 
+snake = Snake.startSnake(18);
+
 function startGame(){
     score = 0;
-    snake = Snake.startSnake(18);
+    document.querySelector('#score').innerHTML = score;
     game_start = setInterval(playGame,50);
     food = Snake.createFood(ctx,snake);
 }
 
-document.addEventListener('keydown',(event) =>{
-    const keyName = event.key;
 
-    if ((snake[0][2] == 'left' || snake[0][2] == 'right') && (keyName == 'ArrowUp' || keyName == 'ArrowDown')){
-        snake[0][2] = keyName == 'ArrowUp' ? 'up': snake[0][2];
-        snake[0][2] = keyName == 'ArrowDown' ? 'down': snake[0][2];
-    }
-
-    if ((snake[0][2] == 'up' || snake[0][2] == 'down') && (keyName == 'ArrowRight' || keyName == 'ArrowLeft')){
-        snake[0][2] = keyName == 'ArrowLeft' ? 'left': snake[0][2];
-        snake[0][2] = keyName == 'ArrowRight' ? 'right': snake[0][2];
-    }
-
-})
 
 document.addEventListener('keydown',(event) =>{
     const keyName = event.key;
@@ -189,16 +180,33 @@ document.addEventListener('keydown',(event) =>{
     }
 })
 
-document.addEventListener('keydown',(event) => {
-    
-    const keyName = event.key;
-    if (keyName === 'r'){
-        clearInterval(game_start);
-        startGame ();
-    }
 
-} )
 
 document.addEventListener('DOMContentLoaded',() =>{
-    startGame();
+
+    document.addEventListener('keydown',(event) => {
+    
+        const keyName = event.key;
+        if (keyName === 'r'){
+            snake = Snake.startSnake(18);
+            clearInterval(game_start);
+            startGame ();
+        }
+    
+    } )
+
+    document.addEventListener('keydown',(event) =>{
+        const keyName = event.key;
+    
+        if ((snake[0][2] == 'left' || snake[0][2] == 'right') && (keyName == 'ArrowUp' || keyName == 'ArrowDown')){
+            snake[0][2] = keyName == 'ArrowUp' ? 'up': snake[0][2];
+            snake[0][2] = keyName == 'ArrowDown' ? 'down': snake[0][2];
+        }
+    
+        if ((snake[0][2] == 'up' || snake[0][2] == 'down') && (keyName == 'ArrowRight' || keyName == 'ArrowLeft')){
+            snake[0][2] = keyName == 'ArrowLeft' ? 'left': snake[0][2];
+            snake[0][2] = keyName == 'ArrowRight' ? 'right': snake[0][2];
+        }
+    
+    })
 })
