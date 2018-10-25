@@ -6,6 +6,7 @@ const direction = ['left','right','up','down'];
 
 let food = [];
 let score = 0;
+let game_start = 0 ;
 
 class Snake {
 
@@ -157,9 +158,13 @@ function playGame(){
     }
 
 }
-snake = Snake.startSnake(18);
-let game_start = setInterval(playGame,50);
 
+function startGame(){
+    score = 0;
+    snake = Snake.startSnake(18);
+    game_start = setInterval(playGame,50);
+    food = Snake.createFood(ctx,snake);
+}
 
 document.addEventListener('keydown',(event) =>{
     const keyName = event.key;
@@ -182,4 +187,18 @@ document.addEventListener('keydown',(event) =>{
        food = Snake.createFood(ctx,snake);
        console.log(food);
     }
+})
+
+document.addEventListener('keydown',(event) => {
+    
+    const keyName = event.key;
+    if (keyName === 'r'){
+        clearInterval(game_start);
+        startGame ();
+    }
+
+} )
+
+document.addEventListener('DOMContentLoaded',() =>{
+    startGame();
 })
