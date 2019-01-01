@@ -2,6 +2,8 @@
 
 This is a javascript implementation of classic Snake game using canvas element for drawing elements.
 
+Play the game [here](https://kianaditya.github.io/Snake-game/).
+
 ## How to play
 
 1. Use 'spacebar' to start or reset the game
